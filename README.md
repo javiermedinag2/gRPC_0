@@ -1,0 +1,2 @@
+Este proyecto en Python busca demostrar la implementación de gRPC en sus diferentes tipos de comunicación, tanto la unaria como tipo stream, haciendo la gestión de una colección de libros como problema pretexto.
+En etapas posteriores al primer commit, se agregará la conexión a MongoDB, asó como la implementación de este proyecto en contenedores. En la etapa final de desarrollo se buscará agregar GraphQL como interfase de datos para servir a una aplicación móvil.
