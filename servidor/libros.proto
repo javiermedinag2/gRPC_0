@@ -1,0 +1,43 @@
+syntax = "proto3";
+package LibroService;
+import "google/protobuf/empty.proto";
+
+service LibrosService {  
+    rpc ObtenerLibro (LibroRequest) returns (LibroResponse){}   
+    rpc AgregarLibro (AgregarLibroRequest) returns (AgregarLibroResponse){ }
+    rpc ListarLibros (google.protobuf.Empty) returns (stream LibrosResponse){ }
+    rpc EliminarLibro (LibroRequest) returns (EliminarLibroResponse){}
+    rpc ActualizarLibro (ActualizarLibroRequest) returns (ActualizarLibroResponse){}
+}  
+message Libro {
+    string id = 1;
+    string titulo = 2;
+    string autor = 3;
+    int32 anio_publicacion = 4;
+}
+
+message LibroRequest {
+    string id = 1;
+}   
+message LibroResponse {
+    Libro libro = 1;
+}
+message LibrosResponse {
+    Libro libros = 1;
+}   
+message AgregarLibroRequest {
+    Libro libro = 1;
+}   
+message AgregarLibroResponse {
+    string id = 1;
+    string mensaje = 2;
+}
+message EliminarLibroResponse {
+    string mensaje = 1;
+}   
+message ActualizarLibroRequest {
+    Libro libro = 1;
+}
+message ActualizarLibroResponse {
+    string mensaje = 1;
+}
