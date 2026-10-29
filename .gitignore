@@ -1,3 +1,13 @@
-./cliente
-./env
-./servidor/__pycache__/
+env
+.env
+.env.*
+!.env.example
+servidor/__pycache__/
+cliente/__pycache__/
+.gradle/
+local.properties
+**/build/
+*.iml
+.idea/
+proxy/__pycache__/
+proxy/tests/__pycache__/

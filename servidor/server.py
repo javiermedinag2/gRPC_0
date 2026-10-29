@@ -1,4 +1,5 @@
 from concurrent import futures
+import os
 import grpc
 import libros_pb2
 import libros_pb2_grpc
@@ -103,7 +104,7 @@ class LibrosServiceServicer(libros_pb2_grpc.LibrosServiceServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     libros_pb2_grpc.add_LibrosServiceServicer_to_server(LibrosServiceServicer(), server)
-    server.add_insecure_port("localhost:50051")
+    server.add_insecure_port(os.getenv("GRPC_BIND_ADDRESS", "localhost:50051"))
     server.start()
     server.wait_for_termination()
 

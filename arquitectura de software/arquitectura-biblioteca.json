@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura de la biblioteca",
+    "output": "arquitectura-biblioteca.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "android-client",
+      "type": "frontend",
+      "label": "App Android",
+      "sublabel": "Kotlin · Jetpack Compose",
+      "tag": "Emulador → 10.0.2.2",
+      "pos": [70, 360],
+      "size": [210, 94]
+    },
+    {
+      "id": "graphql-container",
+      "type": "backend",
+      "label": "Proxy GraphQL",
+      "sublabel": "Python · FastAPI · Strawberry",
+      "tag": "Contenedor · :8000",
+      "pos": [360, 360],
+      "size": [240, 94]
+    },
+    {
+      "id": "grpc-container",
+      "type": "backend",
+      "label": "Servicio de libros",
+      "sublabel": "Python · gRPC",
+      "tag": "Contenedor · :50051",
+      "pos": [690, 360],
+      "size": [220, 94]
+    },
+    {
+      "id": "mongodb-container",
+      "type": "database",
+      "label": "MongoDB",
+      "sublabel": "Base Escuela · colección Libros",
+      "tag": "Contenedor · volumen mongodb_data",
+      "pos": [1000, 360],
+      "size": [250, 94]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Docker Desktop · Docker Compose",
+      "wraps": ["graphql-container", "grpc-container", "mongodb-container"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "android-graphql",
+      "from": "android-client",
+      "to": "graphql-container",
+      "label": "GraphQL por HTTP · host :8000",
+      "labelDy": 71,
+      "variant": "emphasis"
+    },
+    {
+      "id": "graphql-grpc",
+      "from": "graphql-container",
+      "to": "grpc-container",
+      "label": "gRPC · red interna Compose",
+      "labelDy": 71,
+      "variant": "emphasis"
+    },
+    {
+      "id": "grpc-mongodb",
+      "from": "grpc-container",
+      "to": "mongodb-container",
+      "label": "PyMongo · mongodb:27017",
+      "labelDy": 71
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Cliente y acceso",
+      "items": [
+        "El emulador Android accede al host por 10.0.2.2",
+        "Compose publica GraphQL :8000 y gRPC :50051"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Servicios backend",
+      "items": [
+        "GraphQL reenvía las operaciones CRUD al servicio definido en libros.proto",
+        "Los contenedores se esperan mediante healthchecks"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Datos y configuración",
+      "items": [
+        "MongoDB conserva los datos en el volumen persistente mongodb_data",
+        ".env configura las credenciales y los puertos; permanece fuera de la imagen"
+      ]
+    }
+  ]
+}

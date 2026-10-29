@@ -1,0 +1,7 @@
+fastapi>=0.110,<1
+grpcio>=1.81.1,<2
+protobuf>=6.33.5,<7
+python-dotenv>=1.0,<2
+pymongo>=4.6,<5
+strawberry-graphql[fastapi]>=0.250,<1
+uvicorn[standard]>=0.29,<1
